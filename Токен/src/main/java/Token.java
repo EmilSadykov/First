@@ -1,7 +1,7 @@
 /**
  * Created by Emil on 11.11.2016.
  */
-public class Token {
+public abstract class Token {
     protected int begin;
     protected int end;
     protected String text;

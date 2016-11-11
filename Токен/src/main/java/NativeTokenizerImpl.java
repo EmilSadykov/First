@@ -7,23 +7,31 @@ public class NativeTokenizerImpl implements Tokenizer {
         int begin = 0;
         for (int i = 1; i < textIn.length(); i++) {
             if (!(typeChar((int)textIn.charAt(begin)) == typeChar((int)textIn.charAt(i)))) {
-                AddToken(begin, i, textIn.substring(begin, i));
+                AddToken(begin, i, textIn.substring(begin, i), typeChar((int)textIn.charAt(begin)));
                 begin = i;
             }
         }
         if (begin < textIn.length()) {
-            AddToken(begin, textIn.length()-1, textIn.substring(begin, textIn.length()));
+            AddToken(begin, textIn.length()-1, textIn.substring(begin, textIn.length()), typeChar((int)textIn.charAt(begin)));
         }
         return outList;
     }
 
-    private void AddToken(int begin, int end, String text) {
+    private void AddToken(int begin, int end, String text, String tokenType) {
         Token[] tempList = new Token[outList.length+1];
         for (int i = 0; i < outList.length; i++) {
             tempList[i] = outList[i];
         }
-        Token tecToken = new Token(begin, end, text);
-        tempList[outList.length] = tecToken;
+        if (tokenType == "cifr") {
+            Token tecToken = new Number(begin, end, text);
+            tempList[outList.length] = tecToken;
+        } else if (tokenType == "word") {
+            Token tecToken = new Word(begin, end, text);
+            tempList[outList.length] = tecToken;
+        } else {
+            Token tecToken = new Separator(begin, end, text);
+            tempList[outList.length] = tecToken;
+        }
         outList = tempList;
     }
 
