@@ -1,21 +1,30 @@
 
 public class NativeTokenizerImpl implements Tokenizer {
+    private Token[] outList;
 
     public Token[] tokenize(String textIn) {
-        int tokenCount = 1;
+        outList = new Token[0];
         int begin = 0;
         for (int i = 1; i < textIn.length(); i++) {
             if (!(typeChar((int)textIn.charAt(begin)) == typeChar((int)textIn.charAt(i)))) {
-                Token[] tokenList = new Token[tokenCount];
-                tokenList[tokenCount-1].begin = begin;
-                tokenList[tokenCount-1].end = i;
-                tokenList[tokenCount-1].text = textIn.substring(begin, i);
-                System.out.println(begin + " : " + i + " : " + textIn.substring(begin, i));
+                AddToken(begin, i, textIn.substring(begin, i));
                 begin = i;
-                tokenCount++;
             }
         }
-        return new Token[0];
+        if (begin < textIn.length()) {
+            AddToken(begin, textIn.length()-1, textIn.substring(begin, textIn.length()));
+        }
+        return outList;
+    }
+
+    private void AddToken(int begin, int end, String text) {
+        Token[] tempList = new Token[outList.length+1];
+        for (int i = 0; i < outList.length; i++) {
+            tempList[i] = outList[i];
+        }
+        Token tecToken = new Token(begin, end, text);
+        tempList[outList.length] = tecToken;
+        outList = tempList;
     }
 
     public String typeChar(int symbol) {
