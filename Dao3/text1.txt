@@ -2,7 +2,3 @@
 2;Nastya;nastyaLogin;qwerty008
 3;Ivan;ivanLogin;qwerty010
 5;Vasya;vasyaLogin;qwerty011
-1;Marsel;marselLogin;11111
-2;Nastya;nastyaLogin;qwerty008
-3;Ivan;ivanLogin;qwerty010
-5;Vasya;vasyaLogin;qwerty011
